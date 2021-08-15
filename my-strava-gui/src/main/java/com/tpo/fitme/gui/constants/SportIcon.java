@@ -19,7 +19,7 @@ public enum SportIcon {
     HIKE("img/hike.png"),
     ALPINESKI("img/ski.png"),
     ICESKATE("img/ice-skating.png"),
-    MTB("img/mtb.png"),
+    GRAVEL("img/gravel.png"),
     RIDE("img/ride.png"),
     ROAD("img/road.png"),
     COMMUTE("img/commute.png"),

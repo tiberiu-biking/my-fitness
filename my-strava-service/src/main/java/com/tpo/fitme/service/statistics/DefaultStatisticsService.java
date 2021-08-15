@@ -6,6 +6,8 @@ import com.tpo.strava.persistence.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
+
 /**
  * @author Tiberiu
  * @since 19.06.18
@@ -30,12 +32,29 @@ public class DefaultStatisticsService implements StatisticsService {
     }
 
     @Override
+    public float getTotalDistance(Long athleteId, Month month) {
+        return activityService.findAllByMonth(athleteId, month)
+                .stream()
+                .map(Activity::getDistance)
+                .reduce(0f, Float::sum)
+                .longValue();
+    }
+
+    @Override
     public float getTotalDistance(Long athleteId, Sport sport, int year) {
         return activityService.findAllBySportAndYear(athleteId, sport, year)
                 .stream()
                 .map(Activity::getDistance)
                 .reduce(0f, Float::sum)
                 .longValue();
+    }
+
+    @Override
+    public long getTotalDuration(Long athleteId, Month month) {
+        return activityService.findAllByMonth(athleteId, month)
+                .stream()
+                .map(Activity::getDuration)
+                .reduce(0L, Long::sum);
     }
 
     @Override

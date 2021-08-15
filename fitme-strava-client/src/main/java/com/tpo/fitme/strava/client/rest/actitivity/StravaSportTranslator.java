@@ -51,7 +51,7 @@ class StravaSportTranslator {
         if (workoutType != null && WorkoutType.RACE.getValue() == workoutType) {
             return ROAD;
         } else {
-            return MTB;
+            return GRAVEL;
         }
     }
 }

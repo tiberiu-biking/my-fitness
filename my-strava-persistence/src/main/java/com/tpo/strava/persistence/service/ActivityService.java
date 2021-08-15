@@ -5,6 +5,7 @@ import com.tpo.fitme.domain.activity.Activity;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,8 @@ public interface ActivityService {
     List<Activity> findAllBySportAndYear(Long athleteId, Sport sport, int year);
 
     List<Activity> findAllByYear(Long athleteId, int year);
+
+    List<Activity> findAllByMonth(Long athleteId, Month month);
 
     Optional<Activity> findByExternalId(Long athleteId, String externalId);
 

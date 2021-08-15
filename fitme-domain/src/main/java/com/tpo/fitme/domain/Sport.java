@@ -14,7 +14,7 @@ public enum Sport {
     HIKE("Hiking", Unit.KM),
     ALPINESKI("Alpine Ski", Unit.KM, 7),
     ROAD("Road Cycling", Unit.KM),
-    MTB("Gravel", Unit.KM),
+    GRAVEL("Gravel", Unit.KM),
     WORKOUT("Workout", Unit.MIN),
     RIDE("Cycling", Unit.KM),
     COMMUTE("Commute", Unit.KM),

@@ -4,6 +4,7 @@ import com.tpo.fitme.gui.view.chart.ActiveView;
 import com.tpo.fitme.gui.view.chart.CaloriesChartView;
 import com.tpo.fitme.gui.view.chart.DistanceChartView;
 import com.tpo.fitme.gui.view.dashboard.DashboardView;
+import com.tpo.fitme.gui.view.dashboard.PremiumView;
 import com.tpo.fitme.gui.view.grid.ActivityGridView;
 import com.tpo.fitme.gui.view.grid.GearsGridView;
 import com.vaadin.icons.VaadinIcons;
@@ -13,6 +14,7 @@ import com.vaadin.server.Resource;
 public enum DashboardViewType {
 
     DASHBOARD(DashboardView.VIEW_NAME, DashboardView.class, VaadinIcons.HOME, "Dashboard"),
+    PREMIUM(PremiumView.VIEW_NAME, PremiumView.class, VaadinIcons.DASHBOARD, "Premium"),
     CALORIES(CaloriesChartView.VIEW_NAME, CaloriesChartView.class, VaadinIcons.FIRE, "Calories"),
     DISTANCES(DistanceChartView.VIEW_NAME, DistanceChartView.class, VaadinIcons.BAR_CHART, "Distances"),
     ACTIVE(ActiveView.VIEW_NAME, ActiveView.class, VaadinIcons.BOLT, "Active"),

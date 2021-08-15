@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,6 +93,20 @@ public class DefaultActivitiesSummaryService implements ActivitiesSummaryService
     @Override
     public int getActiveDays(Long athleteId, int year) {
         List<Activity> activities = activityService.findAllByYear(athleteId, year);
+        int result = 0;
+        int day = 0;
+        for (Activity activity : activities) {
+            if (activity.getStartDate().getDayOfMonth() != day) {
+                result++;
+                day = activity.getStartDate().getDayOfMonth();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int getActiveDays(Long athleteId, Month month) {
+        List<Activity> activities = activityService.findAllByMonth(athleteId, month);
         int result = 0;
         int day = 0;
         for (Activity activity : activities) {

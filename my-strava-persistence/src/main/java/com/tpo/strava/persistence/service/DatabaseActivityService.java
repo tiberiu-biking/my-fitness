@@ -9,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.tpo.strava.persistence.service.utils.Calendar.endOfTheYear;
-import static com.tpo.strava.persistence.service.utils.Calendar.startOfTheYear;
+import static com.tpo.strava.persistence.service.utils.Calendar.*;
 
 /**
  * @author Tiberiu
@@ -81,6 +77,16 @@ class DatabaseActivityService implements ActivityService {
                 .map(activityEntityMapper::to)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<Activity> findAllByMonth(Long athleteId, Month month) {
+        LocalDateTime startOfTheMonth = startOfTheMonth(month);
+        LocalDateTime endOfTheMonth = endOfTheMonth(month);
+        List<ActivityEntity> activityEntities = activityRepository.findByAthleteIdAndStartDateBetween(athleteId, startOfTheMonth, endOfTheMonth);
+        return activityEntities.parallelStream()
+                .map(activityEntityMapper::to)
+                .collect(Collectors.toList());
     }
 
     @Override
