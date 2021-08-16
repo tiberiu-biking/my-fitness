@@ -29,7 +29,7 @@ public final class PremiumView extends Panel implements View {
     private LastMonthStatisticsPanel lastMonthPanel;
 
     @Autowired
-    private LastMonthStatisticsPanel twoMonthsAgoPanel;
+    private TwoMonthsAgoStatisticsPanel twoMonthsAgoPanel;
 
     @Autowired
     private ActivitiesSummaryService activitiesSummaryService;

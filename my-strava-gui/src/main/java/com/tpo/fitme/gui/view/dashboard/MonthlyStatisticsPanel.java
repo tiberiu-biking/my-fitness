@@ -1,22 +1,14 @@
 package com.tpo.fitme.gui.view.dashboard;
 
-import com.tpo.fitme.domain.Sport;
-import com.tpo.fitme.gui.component.textfield.ReadOnlyTextField;
-import com.tpo.fitme.gui.constants.SportIcon;
 import com.tpo.fitme.gui.domain.UserSession;
 import com.tpo.fitme.service.statistics.StatisticsService;
 import com.tpo.fitme.service.summary.ActivitiesSummaryService;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import lombok.val;
 
 import javax.annotation.PostConstruct;
 import java.time.Month;
-
-import static java.lang.String.valueOf;
 
 /**
  * @author Tiberiu
@@ -49,23 +41,30 @@ abstract class MonthlyStatisticsPanel extends HorizontalLayout {
     }
 
     private void addStatisticsPanels(FormLayout details) {
-        int activeDays = activitiesSummaryService.getActiveDays(athleteId, getMonth());
-        int lastMontActiveDays = activitiesSummaryService.getActiveDays(athleteId, getMonth().minus(1));
+        val activeDays = activitiesSummaryService.getActiveDays(athleteId, getMonth());
+        val lastMontActiveDays = activitiesSummaryService.getActiveDays(athleteId, getMonth().minus(1));
+        details.addComponent(buildH4Label("ACTIVE DAYS"));
+        details.addComponent(textArea(activeDays, lastMontActiveDays));
 
-        int vs = activeDays - lastMontActiveDays;
-        val activeDaysField = new TextField("Active days", String.valueOf(activeDays));
-        details.addComponent(activeDaysField);
+        val minutes = statisticsService.getTotalDuration(athleteId, getMonth());
+        val lastMonthMinutes = statisticsService.getTotalDuration(athleteId, getMonth().minus(1));
+        details.addComponent(buildH4Label("MINUTES"));
+        details.addComponent(textArea(minutes, lastMonthMinutes));
 
-        val activeDaysVsLastMonthField = new TextField("Vs last month", vs > 0 ? "+" : "" + vs);
-        details.addComponent(activeDaysVsLastMonthField);
+        val km = statisticsService.getTotalDistance(athleteId, getMonth());
+        val lastMonthKM = statisticsService.getTotalDistance(athleteId, getMonth().minus(1));
+        details.addComponent(buildH4Label("KM"));
+        details.addComponent(textArea((long) km, (long) lastMonthKM));
+    }
 
-        long duration = statisticsService.getTotalDuration(athleteId, getMonth());
-        val durationField = new TextField("Duration", String.valueOf(duration) + " minutes");
-        details.addComponent(durationField);
-
-        float distance = statisticsService.getTotalDistance(athleteId, getMonth());
-        val distanceField = new TextField("Distance", String.valueOf(distance) + " km");
-        details.addComponent(distanceField);
+    private TextArea textArea(long currentMonth, long lastMonth) {
+        val vs = currentMonth - lastMonth;
+        val line2 = (vs > 0 ? "+" : "") + vs + " FROM LAST MONTH";
+        val textArea = new TextArea();
+        textArea.setRows(2);
+        textArea.setReadOnly(true);
+        textArea.setValue(currentMonth + System.lineSeparator() + line2);
+        return textArea;
     }
 
     private FormLayout buildRoot() {
@@ -81,8 +80,11 @@ abstract class MonthlyStatisticsPanel extends HorizontalLayout {
         return section;
     }
 
-    private ReadOnlyTextField buildField(Sport sport, float value, SportIcon icon, String unit) {
-        return new ReadOnlyTextField(sport.getCaption(), valueOf(value) + " " + unit, icon);
+    private Label buildH4Label(String caption) {
+        Label section = new Label(caption);
+        section.addStyleName(ValoTheme.LABEL_H4);
+        section.addStyleName(ValoTheme.LABEL_COLORED);
+        return section;
     }
 
     private void setVisuals() {
