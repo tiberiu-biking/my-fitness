@@ -10,6 +10,8 @@ import java.time.Month;
  */
 public interface StatisticsService {
 
+    float getTotalElevation(Long athleteId, Month month);
+
     float getTotalDistance(Long athleteId, Month month);
 
     float getTotalDistance(Long athleteId, Sport sport);

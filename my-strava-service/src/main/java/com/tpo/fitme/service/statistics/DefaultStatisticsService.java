@@ -32,6 +32,15 @@ public class DefaultStatisticsService implements StatisticsService {
     }
 
     @Override
+    public float getTotalElevation(Long athleteId, Month month) {
+        return activityService.findAllByMonth(athleteId, month)
+                .stream()
+                .map(Activity::getElevation)
+                .reduce(0f, Float::sum)
+                .longValue();
+    }
+
+    @Override
     public float getTotalDistance(Long athleteId, Month month) {
         return activityService.findAllByMonth(athleteId, month)
                 .stream()

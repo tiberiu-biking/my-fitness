@@ -3,6 +3,8 @@ package com.tpo.fitme.gui.view.dashboard;
 import com.tpo.fitme.gui.domain.UserSession;
 import com.tpo.fitme.service.statistics.StatisticsService;
 import com.tpo.fitme.service.summary.ActivitiesSummaryService;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import lombok.val;
@@ -44,26 +46,32 @@ abstract class MonthlyStatisticsPanel extends HorizontalLayout {
         val activeDays = activitiesSummaryService.getActiveDays(athleteId, getMonth());
         val lastMontActiveDays = activitiesSummaryService.getActiveDays(athleteId, getMonth().minus(1));
         details.addComponent(buildH4Label("ACTIVE DAYS"));
-        details.addComponent(textArea(activeDays, lastMontActiveDays));
+        details.addComponent(textArea(activeDays, lastMontActiveDays, "days ", VaadinIcons.ROCKET));
 
-        val minutes = statisticsService.getTotalDuration(athleteId, getMonth());
-        val lastMonthMinutes = statisticsService.getTotalDuration(athleteId, getMonth().minus(1));
-        details.addComponent(buildH4Label("MINUTES"));
-        details.addComponent(textArea(minutes, lastMonthMinutes));
+        val hours = statisticsService.getTotalDuration(athleteId, getMonth()) / 60;
+        val lastMonthHours = statisticsService.getTotalDuration(athleteId, getMonth().minus(1)) / 60;
+        details.addComponent(buildH4Label("DURATION"));
+        details.addComponent(textArea(hours, lastMonthHours, "hrs", VaadinIcons.STOPWATCH));
 
         val km = statisticsService.getTotalDistance(athleteId, getMonth());
         val lastMonthKM = statisticsService.getTotalDistance(athleteId, getMonth().minus(1));
-        details.addComponent(buildH4Label("KM"));
-        details.addComponent(textArea((long) km, (long) lastMonthKM));
+        details.addComponent(buildH4Label("DISTANCE"));
+        details.addComponent(textArea((long) km, (long) lastMonthKM, "km", VaadinIcons.MAP_MARKER));
+
+        val elevation = statisticsService.getTotalElevation(athleteId, getMonth());
+        val lastMonthElevation = statisticsService.getTotalElevation(athleteId, getMonth().minus(1));
+        details.addComponent(buildH4Label("ELEVATION"));
+        details.addComponent(textArea((long) elevation, (long) lastMonthElevation, "m", VaadinIcons.TRENDING_UP));
     }
 
-    private TextArea textArea(long currentMonth, long lastMonth) {
+    private TextArea textArea(long currentMonth, long lastMonth, String unit, Resource icon) {
         val vs = currentMonth - lastMonth;
-        val line2 = (vs > 0 ? "+" : "") + vs + " FROM LAST MONTH";
+        val line2 = (vs > 0 ? "+" : "") + vs + " from last month";
         val textArea = new TextArea();
         textArea.setRows(2);
         textArea.setReadOnly(true);
-        textArea.setValue(currentMonth + System.lineSeparator() + line2);
+        textArea.setValue(currentMonth + " " + unit + System.lineSeparator() + line2);
+        textArea.setIcon(icon);
         return textArea;
     }
 
