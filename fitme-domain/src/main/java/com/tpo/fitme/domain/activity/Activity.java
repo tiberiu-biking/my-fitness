@@ -18,10 +18,18 @@ public class Activity {
     private String externalId;
     private Float distance;
     private Long duration;
-    private Float elevation;
+    private Float elevation = 0F;
     private Sport sport;
     private LocalDateTime startDate;
     private Boolean commute;
     private Boolean manual;
     private Long calories;
+
+    public Float getElevation() {
+        if (elevation != null) {
+            return elevation;
+        } else {
+            return 0F;
+        }
+    }
 }

@@ -21,6 +21,7 @@ public enum SportIcon {
     ICESKATE("img/ice-skating.png"),
     GRAVEL("img/gravel.png"),
     RIDE("img/ride.png"),
+    VIRTUALRIDE("img/virtual-ride.png"),
     ROAD("img/road.png"),
     COMMUTE("img/commute.png"),
     RUN("img/run.png"),
