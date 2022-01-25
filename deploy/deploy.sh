@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd /home/pi/dev/github/my-fitness
+
 # stop service
 sudo service gui stop
 
@@ -7,13 +9,13 @@ sudo service gui stop
 sudo rm -rfv /home/gui/gui.jar
 
 # copy new jar
-sudo cp -v my-fitness/my-strava-gui/target/my-strava-gui-1.0.0.jar /home/gui/gui.jar
+sudo cp -v my-strava-gui/target/my-strava-gui-1.0.0.jar /home/gui/gui.jar
 
 # set rights
 sudo chown gui:apps /home/gui/gui.jar
 
 # create service
-sudo cp my-fitness/deploy/gui.service /etc/systemd/system
+sudo cp deploy/gui.service /etc/systemd/system
 
 # reload service
 sudo systemctl daemon-reload

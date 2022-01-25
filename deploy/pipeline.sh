@@ -4,6 +4,6 @@ git pull
 git status
 git log -n 1
 mvn clean install -DskipTests
-cd /home/pi/dev/github
 pwd
-./deploy.sh
+echo "Running deploy"
+/home/pi/dev/github/my-fitness/deploy.sh
