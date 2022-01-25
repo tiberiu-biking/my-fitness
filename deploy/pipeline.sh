@@ -6,4 +6,4 @@ git log -n 1
 mvn clean install -DskipTests
 pwd
 echo "Running deploy"
-/home/pi/dev/github/my-fitness/deploy.sh
+/home/pi/dev/github/my-fitness/deploy/deploy.sh
