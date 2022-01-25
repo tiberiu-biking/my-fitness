@@ -32,4 +32,8 @@ public class Activity {
             return 0F;
         }
     }
+
+    public boolean isHikeToAPeak() {
+        return this.sport == Sport.HIKE && this.name.toUpperCase().contains("HIKE TO");
+    }
 }

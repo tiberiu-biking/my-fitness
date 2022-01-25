@@ -17,7 +17,7 @@ public enum Sport {
     GRAVEL("Gravel", Unit.KM),
     WORKOUT("Workout", Unit.MIN),
     RIDE("Cycling", Unit.KM),
-    VIRTUALRIDE("Cycling", Unit.MIN),
+    VIRTUALRIDE("Virtual Cycling", Unit.MIN),
     COMMUTE("Commute", Unit.KM),
     RUN("Running", Unit.KM, 15),
     SWIM("Swimming", Unit.KM),

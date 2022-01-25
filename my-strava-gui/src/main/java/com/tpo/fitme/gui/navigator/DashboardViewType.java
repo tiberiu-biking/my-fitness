@@ -7,6 +7,7 @@ import com.tpo.fitme.gui.view.dashboard.DashboardView;
 import com.tpo.fitme.gui.view.dashboard.PremiumView;
 import com.tpo.fitme.gui.view.grid.ActivityGridView;
 import com.tpo.fitme.gui.view.grid.GearsGridView;
+import com.tpo.fitme.gui.view.grid.PeaksGridView;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.server.Resource;
@@ -20,6 +21,7 @@ public enum DashboardViewType {
     ACTIVE(ActiveView.VIEW_NAME, ActiveView.class, VaadinIcons.BOLT, "Active"),
     GEAR(GearsGridView.VIEW_NAME, GearsGridView.class, VaadinIcons.GAMEPAD, "Gear"),
     TROPHY_ROOM(DistanceChartView.VIEW_NAME, DistanceChartView.class, VaadinIcons.MEDAL, "Trophy Room"),
+    PEAKS(PeaksGridView.VIEW_NAME, PeaksGridView.class, VaadinIcons.PYRAMID_CHART, "Peaks"),
     WORKOUTS(ActivityGridView.VIEW_NAME, ActivityGridView.class, VaadinIcons.GRID, "Workouts");
 
     private final String viewName;
