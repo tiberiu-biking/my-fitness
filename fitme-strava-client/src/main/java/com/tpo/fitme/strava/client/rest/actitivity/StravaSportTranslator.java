@@ -34,7 +34,7 @@ class StravaSportTranslator {
                 result = SOCCER;
             } else if (activityName.contains("TRX")) {
                 result = TRX;
-            } else if (activityName.contains("TT") || activityName.contains("Table Tennis") || activityName.contains("Tischtennis")) {
+            } else if (activityName.contains("TT") || activityName.contains("TABLE TENNIS") || activityName.contains("TISCHTENNIS")) {
                 result = TABLETENNIS;
             } else if ((activityName.contains("HIIT"))) {
                 result = HIIT;
