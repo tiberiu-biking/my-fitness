@@ -1,5 +1,6 @@
 package com.tpo.strava.persistence.service;
 
+import com.tpo.fitme.domain.Athlete;
 import com.tpo.fitme.domain.Sport;
 import com.tpo.fitme.domain.activity.Activity;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
  * @author Tiberiu
  * @since 06.10.17
  */
-public interface ActivityService {
+public interface ActivitiesService {
 
     Activity save(Activity activity);
 
@@ -36,4 +37,6 @@ public interface ActivityService {
     Activity findFirstByOrderByInsertDateDesc(Long athleteId);
 
     LocalDateTime getLastStartDateByAthlete(Long athleteId);
+
+    void removeAll(Athlete athlete);
 }

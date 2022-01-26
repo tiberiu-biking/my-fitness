@@ -4,6 +4,7 @@ import com.tpo.fitme.domain.Athlete;
 import com.tpo.fitme.gui.constants.SportIcon;
 import com.tpo.fitme.gui.navigator.DashboardViewType;
 import com.tpo.fitme.service.sync.Synchronizer;
+import com.tpo.strava.persistence.service.ActivitiesService;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.ContentMode;
@@ -23,14 +24,16 @@ public final class DashboardMenu extends CustomComponent {
     private static final String  STYLE_VISIBLE          = "valo-menu-visible";
     private final        Athlete athlete;
     private final Synchronizer synchronizer;
+    private final ActivitiesService activitiesService;
 
     private Label    notificationsBadge;
     private Label    reportsBadge;
     private MenuItem settingsItem;
 
-    public DashboardMenu(Athlete athlete, Synchronizer groupSynchronizer) {
+    public DashboardMenu(Athlete athlete, Synchronizer groupSynchronizer, ActivitiesService activitiesService) {
         this.athlete = athlete;
         this.synchronizer = groupSynchronizer;
+        this.activitiesService = activitiesService;
         setPrimaryStyleName("valo-menu");
         setId(ID);
         setSizeUndefined();
@@ -71,6 +74,11 @@ public final class DashboardMenu extends CustomComponent {
 
         settingsItem.addItem("Sync", SportIcon.SYNC.getResource(), (MenuBar.Command) selectedItem -> {
             Notification.show("Synchronization started!");
+            synchronizer.sync(athlete);
+        });
+        settingsItem.addItem("Resync", VaadinIcons.FIRE, (MenuBar.Command) selectedItem -> {
+            activitiesService.removeAll(athlete);
+            Notification.show("Cleanup done. Synchronization started!");
             synchronizer.sync(athlete);
         });
 

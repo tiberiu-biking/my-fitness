@@ -3,7 +3,7 @@ package com.tpo.fitme.service.sync;
 import com.tpo.fitme.domain.Athlete;
 import com.tpo.fitme.domain.activity.Activity;
 import com.tpo.fitme.strava.client.rest.ActivityRestClient;
-import com.tpo.strava.persistence.service.ActivityService;
+import com.tpo.strava.persistence.service.ActivitiesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -20,14 +20,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ActivitySynchronizer implements Synchronizer {
 
     private final ActivityRestClient activityRestClient;
-    private final ActivityService activityService;
+    private final ActivitiesService activitiesService;
     private final AtomicBoolean isInProgress;
 
     @Autowired
     public ActivitySynchronizer(ActivityRestClient activityRestClient,
-                                ActivityService activityService) {
+                                ActivitiesService activitiesService) {
         this.activityRestClient = activityRestClient;
-        this.activityService = activityService;
+        this.activitiesService = activitiesService;
         isInProgress = new AtomicBoolean(false);
     }
 
@@ -39,14 +39,14 @@ public class ActivitySynchronizer implements Synchronizer {
             try {
                 isInProgress.set(true);
                 log.info("Starting sync athlete {} activities...", athlete.getId());
-                LocalDateTime lastStartDate = activityService.getLastStartDateByAthlete(athlete.getId());
+                LocalDateTime lastStartDate = activitiesService.getLastStartDateByAthlete(athlete.getId());
 
                 List<Activity> activities = activityRestClient.getAllAfter(athlete, lastStartDate);
 
                 log.info("Found {} new activities", activities.size());
 
                 activities.stream()
-                        .filter(activity -> !activityService.findByExternalId(athlete.getId(), activity.getExternalId()).isPresent())
+                        .filter(activity -> !activitiesService.findByExternalId(athlete.getId(), activity.getExternalId()).isPresent())
                         .map(activity -> activityRestClient.getOne(athlete, activity.getExternalId()))
                         .forEach(this::persistActivity);
 
@@ -58,7 +58,7 @@ public class ActivitySynchronizer implements Synchronizer {
     }
 
     private void persistActivity(Activity activity) {
-        Activity newActivity = activityService.save(activity);
+        Activity newActivity = activitiesService.save(activity);
         log.info("Persisted activity {} with id {}", newActivity.getExternalId(), newActivity.getId());
     }
 }

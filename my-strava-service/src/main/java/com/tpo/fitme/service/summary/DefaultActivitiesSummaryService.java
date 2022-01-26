@@ -3,7 +3,7 @@ package com.tpo.fitme.service.summary;
 import com.tpo.fitme.domain.activity.Activity;
 import com.tpo.fitme.domain.summary.ActivitiesSummary;
 import com.tpo.fitme.domain.summary.Summary;
-import com.tpo.strava.persistence.service.ActivityService;
+import com.tpo.strava.persistence.service.ActivitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +24,11 @@ import static com.tpo.fitme.service.utils.StupidMath.divide;
 @Service
 public class DefaultActivitiesSummaryService implements ActivitiesSummaryService {
 
-    private final ActivityService activityService;
+    private final ActivitiesService activitiesService;
 
     @Autowired
-    public DefaultActivitiesSummaryService(ActivityService activityService) {
-        this.activityService = activityService;
+    public DefaultActivitiesSummaryService(ActivitiesService activitiesService) {
+        this.activitiesService = activitiesService;
     }
 
     @Override
@@ -41,9 +41,9 @@ public class DefaultActivitiesSummaryService implements ActivitiesSummaryService
         List<ActivitiesSummary> activitiesSummaries = Collections.emptyList();
         List<Activity> activities;
         if (duration.equals(Duration.ZERO)) {
-            activities = activityService.findAll(athleteId);
+            activities = activitiesService.findAll(athleteId);
         } else {
-            activities = activityService.findAllForTheLast(athleteId, duration);
+            activities = activitiesService.findAllForTheLast(athleteId, duration);
         }
         if (!activities.isEmpty()) {
             LocalDateTime firstStartDate = activities.get(0).getStartDate();
@@ -92,7 +92,7 @@ public class DefaultActivitiesSummaryService implements ActivitiesSummaryService
 
     @Override
     public int getActiveDays(Long athleteId, int year) {
-        List<Activity> activities = activityService.findAllByYear(athleteId, year);
+        List<Activity> activities = activitiesService.findAllByYear(athleteId, year);
         int result = 0;
         int day = 0;
         for (Activity activity : activities) {
@@ -106,7 +106,7 @@ public class DefaultActivitiesSummaryService implements ActivitiesSummaryService
 
     @Override
     public int getActiveDays(Long athleteId, Month month) {
-        List<Activity> activities = activityService.findAllByMonth(athleteId, month);
+        List<Activity> activities = activitiesService.findAllByMonth(athleteId, month);
         int result = 0;
         int day = 0;
         for (Activity activity : activities) {

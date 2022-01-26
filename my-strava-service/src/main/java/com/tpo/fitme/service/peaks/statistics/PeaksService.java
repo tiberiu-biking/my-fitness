@@ -4,7 +4,7 @@ import com.tpo.fitme.domain.Athlete;
 import com.tpo.fitme.domain.Sport;
 import com.tpo.fitme.domain.activity.Activity;
 import com.tpo.fitme.service.peaks.Peak;
-import com.tpo.strava.persistence.service.ActivityService;
+import com.tpo.strava.persistence.service.ActivitiesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ import java.util.stream.Collectors;
 @Service
 public class PeaksService {
 
-    private final ActivityService activityService;
+    private final ActivitiesService activitiesService;
 
     @Autowired
-    public PeaksService(ActivityService activityService) {
-        this.activityService = activityService;
+    public PeaksService(ActivitiesService activitiesService) {
+        this.activitiesService = activitiesService;
     }
 
     public List<Peak> findAllPeaks(Athlete athlete) {
-        List<Peak> peaks = activityService.findAllBySport(athlete.getId(), Sport.HIKE)
+        List<Peak> peaks = activitiesService.findAllBySport(athlete.getId(), Sport.HIKE)
                 .stream()
                 .filter(Activity::isHikeToAPeak)
                 .map(Peak::of)

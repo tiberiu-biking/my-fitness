@@ -1,10 +1,12 @@
 package com.tpo.strava.persistence.service;
 
+import com.tpo.fitme.domain.Athlete;
 import com.tpo.fitme.domain.Sport;
 import com.tpo.fitme.domain.activity.Activity;
 import com.tpo.strava.persistence.entities.ActivityEntity;
 import com.tpo.strava.persistence.repository.ActivityRepository;
 import com.tpo.strava.persistence.service.mapper.Mapper;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +23,15 @@ import static com.tpo.strava.persistence.service.utils.Calendar.*;
  * @since 06.10.17
  */
 @Service
-class DatabaseActivityService implements ActivityService {
+class DatabaseActivitiesService implements ActivitiesService {
 
     private static final LocalDateTime BEGINNING_OF_TIME = LocalDateTime.ofInstant(Instant.EPOCH, ZoneId.systemDefault());
     private final ActivityRepository activityRepository;
     private final Mapper<ActivityEntity, Activity> activityEntityMapper;
 
     @Autowired
-    public DatabaseActivityService(ActivityRepository activityRepository,
-                                   Mapper<ActivityEntity, Activity> activityEntityMapper) {
+    public DatabaseActivitiesService(ActivityRepository activityRepository,
+                                     Mapper<ActivityEntity, Activity> activityEntityMapper) {
         this.activityRepository = activityRepository;
         this.activityEntityMapper = activityEntityMapper;
     }
@@ -129,5 +131,11 @@ class DatabaseActivityService implements ActivityService {
         } else {
             return BEGINNING_OF_TIME;
         }
+    }
+
+    @Override
+    public void removeAll(Athlete athlete) {
+        val activities = activityRepository.findAllByAthleteId(athlete.getId());
+        activityRepository.deleteInBatch(activities);
     }
 }

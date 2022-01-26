@@ -2,7 +2,7 @@ package com.tpo.fitme.service.sync;
 
 import com.tpo.fitme.strava.client.rest.ActivityRestClient;
 import com.tpo.fitme.strava.client.rest.AthleteRestClient;
-import com.tpo.strava.persistence.service.ActivityService;
+import com.tpo.strava.persistence.service.ActivitiesService;
 import com.tpo.strava.persistence.service.GearService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +22,8 @@ public class SynchronizerConfiguration {
     @Bean
     @Scope(scopeName = SCOPE_SINGLETON)
     public Synchronizer activitySynchronizer(ActivityRestClient activityRestClient,
-                                             ActivityService activityService) {
-        return new ActivitySynchronizer(activityRestClient, activityService);
+                                             ActivitiesService activitiesService) {
+        return new ActivitySynchronizer(activityRestClient, activitiesService);
     }
 
     @Bean
