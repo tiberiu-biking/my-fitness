@@ -1,18 +1,27 @@
 package com.tpo.fitme.service.peaks;
 
 import com.tpo.fitme.domain.activity.Activity;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.var;
 import lombok.val;
 
 @Data
+@Builder
 public class Peak {
 
     private final String name;
     private final String altitude;
+    private final String activity;
+    private final String date;
 
     public static Peak of(Activity activity) {
-        return new Peak(parseName(activity), parseAltitude(activity));
+        return Peak.builder()
+                .name(parseName(activity))
+                .altitude(parseAltitude(activity))
+                .activity(activity.getUrl())
+                .date(activity.getStartDate().toString())
+                .build();
     }
 
     private static String parseName(Activity activity) {
