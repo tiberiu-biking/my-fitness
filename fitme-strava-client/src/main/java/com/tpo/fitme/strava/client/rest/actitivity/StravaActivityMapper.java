@@ -20,7 +20,6 @@ class StravaActivityMapper {
             activity.setName(stravaActivity.getName());
             activity.setStartDate(stravaActivity.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
             activity.setCalories(stravaActivity.getCalories());
-
             activity.setDistance(stravaActivity.getDistance() / 1000);
             activity.setDuration(stravaActivity.getMovingTime() / 60);
             activity.setSport(StravaSportTranslator.translate(stravaActivity));

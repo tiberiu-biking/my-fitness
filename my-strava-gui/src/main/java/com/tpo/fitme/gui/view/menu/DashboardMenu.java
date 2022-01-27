@@ -80,28 +80,6 @@ public final class DashboardMenu extends CustomComponent {
             Notification.show("Cleanup done. Synchronization started!");
             synchronizer.sync(athlete);
         });
-
-        /*
-        settingsItem.addItem("Edit Profile", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-//                ProfilePreferencesWindow.open(user, false);
-            }
-        });
-        settingsItem.addItem("Preferences", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-//                ProfilePreferencesWindow.open(user, true);
-            }
-        });
- */
-        settingsItem.addSeparator();
-        settingsItem.addItem("Sign Out", new MenuBar.Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-//                DashboardEventBus.post(new UserLoggedOutEvent());
-            }
-        });
         return settings;
     }
 

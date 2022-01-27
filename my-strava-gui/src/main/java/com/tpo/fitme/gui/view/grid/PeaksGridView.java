@@ -6,6 +6,7 @@ import com.tpo.fitme.service.peaks.Peak;
 import com.tpo.fitme.service.peaks.statistics.PeaksService;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -32,6 +33,9 @@ public class PeaksGridView extends AbstractGridView {
         grid.setItems(peaksService.findAllPeaks(athlete));
         grid.addColumn(Peak::getName).setCaption("Peak").setHidable(false);
         grid.addColumn(Peak::getAltitude).setCaption("Altitude").setHidable(false);
+        grid.addColumn(a -> "<a href='" + a.getActivity() + "' target='_blank'>" + a.getActivity() + "</a>", new HtmlRenderer()).setCaption("url").setHidable(false);
+
+        grid.addColumn(Peak::getDate).setCaption("Date").setHidable(false);
         return grid;
     }
 

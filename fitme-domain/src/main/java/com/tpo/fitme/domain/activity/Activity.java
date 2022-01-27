@@ -25,6 +25,10 @@ public class Activity {
     private Boolean manual;
     private Long calories;
 
+    public String getUrl() {
+        return "https://www.strava.com/activities/" + externalId;
+    }
+
     public Float getElevation() {
         if (elevation != null) {
             return elevation;
