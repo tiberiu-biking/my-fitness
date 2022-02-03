@@ -12,7 +12,7 @@ sudo rm -rfv /home/gui/gui.jar
 sudo cp -v my-strava-gui/target/my-strava-gui-1.0.0.jar /home/gui/gui.jar
 
 # set rights
-sudo chown gui:apps /home/gui/gui.jar
+sudo chown gui:gui /home/gui/gui.jar
 
 # create service
 sudo cp deploy/gui.service /etc/systemd/system
