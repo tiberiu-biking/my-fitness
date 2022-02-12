@@ -7,6 +7,8 @@ import com.tpo.strava.persistence.service.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author Tiberiu Popa
  * @since 6/2/2018
@@ -25,23 +27,20 @@ public class DatabaseAthleteService implements AthleteService {
 
     @Override
     public void save(Athlete athlete) {
-        athleteRepository.saveAndFlush(athleteEntityMapper.from(athlete));
+        AthleteEntity from = athleteEntityMapper.from(athlete);
+        athleteRepository.saveAndFlush(from);
     }
 
     @Override
     public Athlete findOne(Long id) {
-        AthleteEntity athleteEntity = athleteRepository.findOne(id);
-        if (athleteEntity != null)
-            return athleteEntityMapper.to(athleteEntity);
-        else {
-            return null;
-        }
+        Optional<AthleteEntity> athleteEntity = athleteRepository.findById(id);
+        return athleteEntity.map(athleteEntityMapper::to).orElse(null);
     }
 
 
     @Override
     public void updateAuthToken(Athlete athlete) {
-        AthleteEntity athleteEntity = athleteRepository.findOne(athlete.getId());
+        AthleteEntity athleteEntity = athleteRepository.getById(athlete.getId());
         athleteEntity.setAuthToken(athlete.getAuthToken());
         athleteRepository.saveAndFlush(athleteEntity);
     }

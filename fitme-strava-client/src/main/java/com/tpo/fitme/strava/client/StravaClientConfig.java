@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Duration;
+
 /**
  * @author Tiberiu
  * @since 08.10.17
@@ -25,8 +27,8 @@ public class StravaClientConfig {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
-                .setConnectTimeout(30000)
-                .setReadTimeout(30000)
+                .setConnectTimeout(Duration.ofSeconds(30000))
+                .setReadTimeout(Duration.ofSeconds(30000))
                 .build();
     }
 
